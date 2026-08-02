@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    height: var(--app-height);
+    height: 100vh;
     background: hsl(0, 0%, 10%);
 }
 main {

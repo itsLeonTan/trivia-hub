@@ -75,26 +75,30 @@ if (page == "game.html") {
 
 
     function handleAnswer(event) {
-        if (event.target.textContent == correctAnswer) point++;
+        console.log(correctAnswer);
+        console.log(decodeHtml(correctAnswer));
+        if (event.target.textContent == decodeHtml(correctAnswer)) point++;
 
         buttons.forEach(button => {
             button.removeEventListener("click", handleAnswer);
 
             if (!(button.id == event.target.id)) button.style.opacity = "0.4";
-            if (button.textContent == correctAnswer) button.classList.add("right");
+            if (button.textContent == decodeHtml(correctAnswer)) button.classList.add("right");
             else button.classList.add("wrong");
         });
 
         setTimeout(() => {
-            buttons.forEach(button => {
-                button.className = "";
-                button.style.opacity = "1";
-            });
+            
 
             if (index == 9) {
                 localStorage.setItem("point", point);
                 window.location.href = "result.html";
             } else {
+                buttons.forEach(button => {
+                    button.className = "";
+                    button.style.opacity = "1";
+                });
+
                 index++;
                 setQuestion();
             }
@@ -119,4 +123,10 @@ function shuffle(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+}
+
+function decodeHtml(str) {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = str;
+    return txt.value;
 }
