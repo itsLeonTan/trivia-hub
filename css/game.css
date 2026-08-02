@@ -1,0 +1,136 @@
+body {
+    margin: 0;
+    height: var(--app-height);
+    background: hsl(0, 0%, 10%);
+    color: white;
+}
+main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#head {
+    margin-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#head p {
+    margin: 0;
+}
+
+#question-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#question-section h2 {
+    margin: 20px;
+}
+
+#answers {
+    margin-top: auto;
+    width: min(100%, 1000px);
+    height: 60%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+}
+#answers button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    font-weight: 700;
+
+    transition:transform 0.15s ease;
+}
+
+#answers button:active { transform: scale(0.97); }
+
+#red {
+    background: linear-gradient(
+        135deg,
+        var(--red-light),
+        var(--red-medium)
+    );
+}
+#red:hover,
+#red:active {
+    background: linear-gradient(
+        135deg,
+        var(--red-medium),
+        var(--red-dark)
+    );
+}
+
+#blue {
+    background: linear-gradient(
+        135deg,
+        var(--blue-light),
+        var(--blue-medium)
+    );
+}
+#blue:hover,
+#blue:active {
+    background: linear-gradient(
+        135deg,
+        var(--blue-medium),
+        var(--blue-dark)
+    );
+}
+
+#yellow {
+    background: linear-gradient(
+        135deg,
+        var(--yellow-light),
+        var(--yellow-medium)
+    );
+}
+#yellow:hover,
+#yellow:active {
+    background: linear-gradient(
+        135deg,
+        var(--yellow-medium),
+        var(--yellow-dark)
+    );
+}
+
+#green {
+    background: linear-gradient(
+        135deg,
+        var(--green-light),
+        var(--green-medium)
+    );
+}
+#green:hover,
+#green:active {
+    background: linear-gradient(
+        135deg,
+        var(--green-medium),
+        var(--green-dark)
+    );
+}
+
+#answers .wrong {
+    background: var(--red-medium);
+}
+#answers .right {
+    background: var(--green-medium);
+}

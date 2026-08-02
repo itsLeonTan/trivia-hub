@@ -1,0 +1,37 @@
+body {
+    background: hsl(0, 0%, 10%);
+    color: white;
+    height: var(--app-height);
+    width: 100%;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+body > h1 {
+    margin: 0;
+}
+body > p {
+    font-size: 20px;
+    margin: 0;
+    text-align: center;
+    padding: 16px
+}
+body > button {
+    font-size: 20px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 16px;
+    color: white;
+    background: hsl(0, 0%, 20%);
+}
+body > button:hover {
+    background: hsl(0, 0%, 15%);
+}
+body > button:active {
+    background: hsl(0, 0%, 15%);
+    transform: scale(0.95);
+}
