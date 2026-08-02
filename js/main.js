@@ -3,7 +3,7 @@ document.documentElement.style.setProperty("--app-height", `${window.innerHeight
 const page = window.location.pathname.split("/").pop();
 
 // INDEX PAGE
-if (page == "index.html") {
+if (page == "" || page == "index.html") {
     async function getCategories() {
         const response = await fetch("https://opentdb.com/api_category.php");
         const data = await response.json();
