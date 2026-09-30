@@ -35,8 +35,10 @@ if (page == "" || page == "index.html") {
 // GAME PAGE
 if (page == "game.html") {
     let point = 0;
-    let questions;
-    let correctAnswer;
+    let questions = [];
+    let allAnswers = [];
+    let correctAnswers = []; 
+    let myAnswers = [];
     let index = 0; 
 
     async function getQuestions() {
@@ -47,8 +49,17 @@ if (page == "game.html") {
         try {
             const response = await fetch(apiUrl); 
             const data = await response.json();
-            questions = data.results;
-            shuffle(questions);
+            let dataResult = data.results;
+            shuffle(dataResult);
+
+            for (let i = 0; i < 10; i++) {
+                questions.push(decodeHtml(dataResult[i].question));
+                correctAnswers.push(decodeHtml(dataResult[i].correct_answer));
+                let incorrectAnswers = dataResult[i].incorrect_answers.map(decodeHtml);
+                let answers = [correctAnswers[i], ...incorrectAnswers];
+                shuffle(answers);
+                allAnswers.push(answers);
+            }
         }
         catch (error) {
             console.log("Failure to load questions: ", error);
@@ -64,17 +75,13 @@ if (page == "game.html") {
 
     async function setQuestion() {
         if (index == 0) await getQuestions();
+        console.log(allAnswers);
 
         document.getElementById("question-number").textContent = "Question " + (index + 1) + " of 10";
-        document.getElementById("question").textContent = decodeHtml(questions[index].question);
-        correctAnswer = decodeHtml(questions[index].correct_answer);
-        let incorrectAnswers = questions[index].incorrect_answers.map(decodeHtml);
-        let answers = [correctAnswer, ...incorrectAnswers];
+        document.getElementById("question").textContent = questions[index];
 
-        shuffle(answers);
-
-        for (let i = 0; i < answers.length; i++) {
-            buttons[i].textContent = answers[i];
+        for (let i = 0; i < 4; i++) {
+            buttons[i].textContent = allAnswers[index][i];
         }
 
         buttons.forEach(button => {
@@ -85,21 +92,24 @@ if (page == "game.html") {
 
 
     function handleAnswer(event) {
-        if (event.target.textContent == decodeHtml(correctAnswer)) point++;
+        myAnswers.push(event.target.textContent);
+        if (myAnswers[index] == correctAnswers[index]) point++;
 
         buttons.forEach(button => {
             button.removeEventListener("click", handleAnswer);
 
             if (!(button.id == event.target.id)) button.style.opacity = "0.4";
-            if (button.textContent == decodeHtml(correctAnswer)) button.classList.add("right");
+            if (button.textContent == correctAnswers[index]) button.classList.add("right");
             else button.classList.add("wrong");
         });
 
         setTimeout(() => {
-            
-
             if (index == 9) {
                 localStorage.setItem("point", point);
+                localStorage.setItem("questions", JSON.stringify(questions));
+                localStorage.setItem("allAnswers", JSON.stringify(allAnswers));
+                localStorage.setItem("correctAnswers", JSON.stringify(correctAnswers));
+                localStorage.setItem("myAnswers", JSON.stringify(myAnswers));
                 window.location.href = "result.html";
             } else {
                 buttons.forEach(button => {
@@ -116,8 +126,75 @@ if (page == "game.html") {
 
 // RESULT PAGE
 if (page == "result.html") {
-    point = localStorage.getItem("point");
-    
+    let index = 0;
+    let point = localStorage.getItem("point");
+    let questions = JSON.parse(localStorage.getItem("questions") || "[]");
+    let allAnswers = JSON.parse(localStorage.getItem("allAnswers") || "[]");
+    let correctAnswers = JSON.parse(localStorage.getItem("correctAnswers") || "[]");
+    let myAnswers = JSON.parse(localStorage.getItem("myAnswers") || "[]");
+
+    function update() {
+        for (let i = 0; i < 10; i++) {
+            let q = "q" + (i + 1);
+            let btn = document.getElementById(q);
+
+            if (myAnswers[i] == correctAnswers[i]) {
+                if (i == index) {
+                    btn.style.backgroundColor = "rgba(var(--review-green), 1)";
+                    btn.style.color = "#15251A";
+                    btn.style.borderColor = "rgba(var(--review-green), 1)";
+                } else {
+                    btn.style.backgroundColor = "rgba(var(--review-green), 0.15)";
+                    btn.style.color = "rgba(var(--review-green), 1)";
+                    btn.style.borderColor = "rgba(var(--review-green), 0.5)";
+                }
+            }
+            else {
+                if (i == index) {
+                    btn.style.backgroundColor = "rgba(var(--review-red), 1)";
+                    btn.style.color = "#15251A";
+                    btn.style.borderColor = "rgba(var(--review-red), 1)";
+                } else {
+                    btn.style.backgroundColor = "rgba(var(--review-red), 0.15)";
+                    btn.style.color = "rgba(var(--review-red), 1)";
+                    btn.style.borderColor = "rgba(var(--review-red), 0.5)";
+                }
+            }
+        }
+
+        document.getElementById("question-on").textContent = index + 1;
+        document.getElementById("question").textContent = questions[index];
+        for (let i = 0; i < 4; i++) {
+            let a = "a" + (i + 1);
+            let ans = document.getElementById(a);
+            ans.textContent = allAnswers[index][i];
+
+            // Reset color
+            ans.style.backgroundColor = "rgba(255, 255, 255, 2.5%)";
+            ans.style.borderColor = "rgba(255, 255, 255, 10%)";
+
+            if (allAnswers[index][i] == myAnswers[index]) {
+                ans.style.backgroundColor = "rgba(var(--review-red), 0.15)";
+                ans.style.borderColor = "rgba(var(--review-red), 0.5)";
+            }
+            if (allAnswers[index][i] == correctAnswers[index]) {
+                ans.style.backgroundColor = "rgba(var(--review-green), 0.15)";
+                ans.style.borderColor = "rgba(var(--review-green), 0.5)";
+            }
+        }
+    }
+    update();
+
+    for (let i = 0; i < 10; i++) {
+        let q = "q" + (i + 1);
+        btn = document.getElementById(q);
+
+        btn.addEventListener("mouseenter", (event) => {
+            index = parseInt(event.target.id.slice(1)) - 1;
+            update();
+        })
+    }
+
     document.getElementById("correct").textContent = point;
     document.getElementById("mainMenu").addEventListener("click", () => {
         window.location.href = "index.html";

@@ -14,6 +14,9 @@
     --green-light: hsl(113, 70%, 65%);
     --green-medium: hsl(113, 76%, 30%);
     --green-dark: hsl(113, 76%, 22%);
+
+    --review-green: 155, 214, 172;
+    --review-red: 239, 183, 130;
 }
 html {
     scroll-behavior: smooth;

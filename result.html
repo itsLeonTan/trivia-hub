@@ -15,9 +15,45 @@
         <img src="src/rubik.png" alt="Rubik's Cube">
     </a>
     
-    <h1>Your Result</h1>
+    <header>
+        <p>QUIZ COMPLETED</p>
+        <h1>Your Result</h1>
+        <p><span class="dim">You answered </span><span id="correct">0</span><span class="dim"> out of </span>10<span class="dim"> questions correctly.</span></p>
+    </header>
 
-    <p>You answered <span id="correct">0</span> out of 10 questions correctly.</p>
+    <div id="review">
+        <div id="title">
+            <h2>Review your answers</h2>
+            <p>Hover over a number, or tap to see each question.</p>
+        </div>
+
+        <div id="question-no">
+            <button id="q1">1</button>
+            <button id="q2">2</button>
+            <button id="q3">3</button>
+            <button id="q4">4</button>
+            <button id="q5">5</button>
+            <button id="q6">6</button>
+            <button id="q7">7</button>
+            <button id="q8">8</button>
+            <button id="q9">9</button>
+            <button id="q10">10</button>
+        </div>
+        
+        <hr style="width: 100%; opacity: 0.1;">
+
+        <div id="question-container">
+            <p>QUESTION <span id="question-on">1</span> / 10</p>
+            <h3 id="question">Question</h3>
+            <div id="answers">
+                <div id="a1">a1</div>
+                <div id="a2">a2</div>
+                <div id="a3">a3</div>
+                <div id="a4">a4</div>
+            </div>
+        </div>
+    </div>
+
 
     <button id="mainMenu">
         Main Menu
