@@ -2,6 +2,7 @@ body {
     margin: 0;
     height: 100vh;
     background: hsl(0, 0%, 10%);
+    min-height: calc(100vh - 40px);
 }
 main {
     height: 100%;
@@ -13,7 +14,7 @@ main {
 }
 
 #above-title {
-    margin: 0 16px;
+    margin: 20px 16px 0 16px;
     color: #999999;
     font-size: 11px;
     letter-spacing: 2px;
@@ -63,7 +64,7 @@ main {
 #settings {
     display: flex;
     flex-direction: row;
-    margin: 28px 0;
+    margin: 20px 0;
     gap: 12px;
 }
 .setting-group {
@@ -156,7 +157,7 @@ main {
     border: 1px solid #3B3B3B;
     border-radius: 16px;
     padding: 18px 20px;
-    margin-top: 60px; 
+    margin-top: 40px; 
     display: flex;
     gap: 12px
 }
