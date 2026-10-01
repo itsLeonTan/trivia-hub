@@ -12,7 +12,19 @@ main {
     align-items: center;
 }
 
-.game-title {
+#above-title {
+    margin: 0 16px;
+    color: #999999;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+#below-title {
+    margin: 0 16px 16px 16px;
+    color: #999999;
+    text-align: center;
+}
+#game-title {
     font-size: clamp(3rem, 8vw, 6rem); /* clamp(min, scale, max) */
     font-weight: 900;
     letter-spacing: 2px;
@@ -50,14 +62,14 @@ main {
 
 #settings {
     display: flex;
-    flex-direction: column;
-    margin: 8px 0 32px 0;
+    flex-direction: row;
+    margin: 28px 0;
     gap: 12px;
 }
 .setting-group {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 8px;
 }
 .setting-group label {
     font-size: 1rem;
@@ -135,4 +147,54 @@ main {
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+}
+
+
+#info-container {
+    width: min(400px, 95%);
+    background-color: #212121;
+    border: 1px solid #3B3B3B;
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-top: 60px; 
+    display: flex;
+    gap: 12px
+}
+#info-container div:first-child {
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    width: 32px;
+    height: 32px;
+    font-weight: bold;
+    color: #5CA3FF;
+    background-color: rgba(20, 100, 204, 0.12);
+    border: 1px solid rgba(20, 100, 204, 0.35);
+}
+#info-container div:last-child p:first-child {
+    color: white;
+    font-size: 13px;
+    margin-top: 1px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+#info-container div:last-child p:last-child {
+    color: #A1A1A1;
+    font-size: 13px;
+    margin: 0;
+}
+#source {
+    color: #DDDDDD;
+}
+#source:hover {
+    color: rgb(81, 136, 210); 
+}
+
+@media (max-width: 500px) {
+    #settings {
+        flex-direction: column;
+    }
 }
