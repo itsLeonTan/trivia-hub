@@ -1,8 +1,8 @@
 body {
     margin: 0;
     height: 100vh;
+    min-height: 100vh;
     background: hsl(0, 0%, 10%);
-    min-height: calc(100vh - 40px);
 }
 main {
     height: 100%;
@@ -14,7 +14,7 @@ main {
 }
 
 #above-title {
-    margin: 20px 16px 0 16px;
+    margin: 0px 16px 4px 16px;
     color: #999999;
     font-size: 11px;
     letter-spacing: 2px;
@@ -195,6 +195,9 @@ main {
 }
 
 @media (max-width: 500px) {
+    #above-title {
+        margin-top: 48px;
+    }
     #settings {
         flex-direction: column;
     }
