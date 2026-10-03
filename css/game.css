@@ -1,7 +1,7 @@
 body {
     margin: 0;
     height: 100vh;
-    background: hsl(0, 0%, 10%);
+    background-image: radial-gradient(circle 500px at center, #353535, #171717);
     color: white;
 }
 main {
@@ -14,32 +14,73 @@ main {
 }
 
 #head {
-    margin-top: 20vh;
+    width: min(95%, 800px);
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: end; 
 }
 #head p {
     margin: 0;
+    color: #8A8A8A;
+    font-size: 12px;
+    font-weight: bold;
+}
+#head #question-number {
+    color: white;
+}
+#progress-container {
+    width: min(95%, 800px);
+    height: 2px;
+    background-color: #333333;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+#progressBar {
+    height: 100%;
+    width: 20%;
+    background: linear-gradient(90deg, #2196F3, #4CAF50);
+    border-radius: 12px;
+    transition: width 0.4s ease-in-out;
 }
 
 #question-section {
+    margin: 40px 0;
+    width: min(95%, 800px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
-#question-section h2 {
-    margin: 20px;
+#question-section h1 {
+    margin: 12px;
+    font-weight: normal;
+    font-size: clamp(28px, 3vw, 40px)
+}
+#question-section p {
+    margin: 0;
+}
+#question-section p:first-child {
+    color: #8A8A8A;
+    font-size: 11px;
+}
+#question-section #genre,
+#question-section #mode {
+    color: #82B0ED;
+}
+#question-section p:last-child {
+    color: #8A8A8A;
+    font-size: 14px;
 }
 
 #answers {
-    margin-top: auto;
+    margin: 0;
     width: min(100%, 1000px);
-    height: 60%;
-    padding: 20px;
+    height: 40vh;
+    padding: 0 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -56,7 +97,8 @@ main {
     color: white;
     cursor: pointer;
 
-    font-size: clamp(1rem, 4vw, 1.2rem);
+    /* font-size: clamp(1rem, 4vw, 1.2rem); */
+    font-size: 17px;
     font-weight: 700;
 
     transition:transform 0.15s ease;
@@ -133,4 +175,16 @@ main {
 }
 #answers .right {
     background: var(--green-medium);
+}
+
+@media (max-width: 400px) {
+    #answers {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    #answers button {
+        border-radius: 12px;
+    }
 }

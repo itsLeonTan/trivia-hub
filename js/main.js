@@ -24,9 +24,18 @@ if (page == "" || page == "index.html") {
     document.getElementById("start-button").addEventListener("click", () => {
         let difficultyChoice = document.getElementById("difficulty").value;
         let genreChoice = document.getElementById("genre").value;
+        let genreName = document.getElementById("genre").selectedOptions[0].text;
+
+        // These categories do not have enough questions on hard difficulty. 
+        // Hard coding it to reduce requests made to the server.
+        if (difficultyChoice == "hard" && (genreChoice == "26" || genreChoice == "30")) { 
+            alert("This category does not have enough questions for hard difficulty. Please choose another option."); 
+            return; 
+        }
 
         localStorage.setItem("difficulty", difficultyChoice);
         localStorage.setItem("genre", genreChoice);
+        localStorage.setItem("genreName", genreName);
 
         window.location.href = "game.html";
     });
@@ -41,9 +50,11 @@ if (page == "game.html") {
     let myAnswers = [];
     let index = 0; 
 
+    let difficultyChoice = localStorage.getItem("difficulty");
+    let genreChoice = localStorage.getItem("genre");
+    let genreName = localStorage.getItem("genreName");
+
     async function getQuestions() {
-        let difficultyChoice = localStorage.getItem("difficulty");
-        let genreChoice = localStorage.getItem("genre");
 
         let apiUrl = "https://opentdb.com/api.php?amount=10&category=" + genreChoice + "&difficulty=" + difficultyChoice + "&type=multiple";
         try {
@@ -77,7 +88,10 @@ if (page == "game.html") {
         if (index == 0) await getQuestions();
         console.log(allAnswers);
 
-        document.getElementById("question-number").textContent = "Question " + (index + 1) + " of 10";
+        document.getElementById("genre").textContent = genreName.toUpperCase();
+        document.getElementById("mode").textContent = difficultyChoice.toUpperCase();
+        document.getElementById("question-number").textContent = "Question " + (index + 1);
+        document.getElementById("progressBar").style.width = Math.round(((index + 1) / 10) * 100) + '%';
         document.getElementById("question").textContent = questions[index];
 
         for (let i = 0; i < 4; i++) {
