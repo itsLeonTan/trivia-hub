@@ -104,8 +104,23 @@ if (page == "game.html") {
     }
     setQuestion();
 
-
     function handleAnswer(event) {
+        let nextLabel = document.getElementById("nextLabel");
+        let nextContainer = document.getElementById("next-container");
+        let nextBar = document.getElementById("nextBar");
+
+        if (index == 9) nextLabel.textContent = "Results in 2s";
+        else nextLabel.textContent = "Next question in 2s";
+        setTimeout(() => {
+            if (index == 9) nextLabel.textContent = "Results in 1s";
+            else nextLabel.textContent = "Next question in 1s";
+        }, 1000);
+
+        nextBar.style.transition = "width 2s linear";
+        nextBar.style.width = "0%";
+        nextLabel.style.visibility = "visible";
+        nextContainer.style.visibility = "visible";
+
         myAnswers.push(event.target.textContent);
         if (myAnswers[index] == correctAnswers[index]) point++;
 
@@ -118,6 +133,11 @@ if (page == "game.html") {
         });
 
         setTimeout(() => {
+            nextLabel.style.visibility = "hidden";
+            nextContainer.style.visibility = "hidden";
+            nextBar.style.transition = "none";
+            nextBar.style.width = "100%";
+
             if (index == 9) {
                 localStorage.setItem("point", point);
                 localStorage.setItem("questions", JSON.stringify(questions));
@@ -134,7 +154,7 @@ if (page == "game.html") {
                 index++;
                 setQuestion();
             }
-        }, 1500);
+        }, 2000);
     }
 }
 
